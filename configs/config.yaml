@@ -1,0 +1,65 @@
+# DocRescue configuration
+# Edit paths to match your local setup
+
+data:
+  sd7k_root: "data/sd7k_512"          # after preprocessing: resized 512x512 pairs
+  sd7k_raw: "data/sd7k_raw"           # place the unzipped SD7K here
+  smartdoc_root: "data/smartdoc_qa"
+  own_photos_root: "data/own_photos"
+  gt_texts_dir: "data/own_photos/gt_texts"
+
+  # after preprocessing, structure should be:
+  # sd7k_512/
+  #   train/input/   train/target/
+  #   val/input/     val/target/
+  #   test/input/    test/target/
+
+preprocessing:
+  image_size: 512
+  jpeg_quality: 95
+  val_fraction: 0.05    # fraction of train docs used as val
+
+model:
+  encoder: "resnet34"
+  encoder_weights: "imagenet"
+  in_channels: 3
+  out_channels: 3
+
+training:
+  epochs: 50
+  batch_size: 12
+  learning_rate: 2.0e-4
+  weight_decay: 1.0e-4
+  amp: true                # mixed precision
+  num_workers: 4
+  pin_memory: true
+  seed: 42
+
+  loss:
+    l1_weight: 1.0
+    ssim_weight: 0.2
+    perceptual_weight: 0.0  # set >0 to enable VGG perceptual loss (ablation)
+
+  scheduler:
+    type: "cosine"          # cosine annealing
+    eta_min: 1.0e-6
+
+  checkpoint_dir: "experiments/checkpoints"
+  log_dir: "experiments/logs"
+  save_best_metric: "psnr"  # psnr | ssim
+
+inference:
+  gain_map_blur_ksize: 51   # Gaussian blur kernel for gain map smoothing
+  gain_map_min_clamp: 0.05  # avoid division by near-zero
+
+ocr:
+  engine: "tesseract"       # tesseract | easyocr | both
+  tesseract_config: "--oem 1 --psm 3"
+  lang: "eng"
+  n_jobs: 4                 # parallel OCR jobs
+
+results:
+  output_dir: "results"
+  figures_dir: "results/figures"
+  tables_dir: "results/tables"
+  failures_dir: "results/failure_cases"

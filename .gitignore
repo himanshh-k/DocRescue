@@ -1,0 +1,55 @@
+# ── Personal / Planning Documentation ─────────────────────────────────────────
+docrescue_project_plan.md
+README.md
+
+# ── Python & Virtual Environment ──────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# ── Datasets & Large Media ───────────────────────────────────────────────────
+data/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# ── Checkpoints & Training Artifacts ──────────────────────────────────────────
+experiments/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.bin
+
+# ── Logs & Experiment Trackers ───────────────────────────────────────────────
+logs/
+*.log
+runs/
+wandb/
+tensorboard/
+.tensorboard/
+
+# ── Evaluation Results & Scratch Outputs ─────────────────────────────────────
+results/
+scratch/
+
+# ── Jupyter Notebook Artifacts ───────────────────────────────────────────────
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# ── IDEs & Operating System Artifacts ────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
